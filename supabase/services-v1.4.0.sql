@@ -33,7 +33,7 @@ grant execute on function public.can_manage_services() to authenticated;
 
 drop policy if exists "services_select_active" on public.services;
 create policy "services_select_active" on public.services for select to authenticated
-using (is_active or public.can_manage_services());
+using (is_active or public.is_admin());
 drop policy if exists "services_admin_insert" on public.services;
 create policy "services_admin_insert" on public.services for insert to authenticated
 with check (public.can_manage_services());
