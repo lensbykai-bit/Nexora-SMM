@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Nexora SMM Admin Console v1.3.0">
-  <title>Nexora SMM — Admin Console v1.3.0</title>
+  <meta name="description" content="Nexora SMM Admin Console v1.4.0">
+  <title>Nexora SMM — Admin Console v1.4.0</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Khmer:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -14,11 +14,12 @@
 <body>
   <div class="admin-shell">
     <aside class="admin-sidebar">
-      <a class="admin-brand" href="index.html"><img src="logo.svg" alt="Nexora SMM"><div><strong>NEXORA SMM</strong><span>ADMIN CONSOLE · v1.3.0</span></div></a>
-      <div class="admin-user"><div class="admin-avatar" id="adminAvatar">NX</div><div><small data-km="អ្នកគ្រប់គ្រង" data-en="Administrator">អ្នកគ្រប់គ្រង</small><strong id="adminName">Checking...</strong><span id="adminEmail"></span></div></div>
+      <a class="admin-brand" href="index.html"><img src="logo.svg" alt="Nexora SMM"><div><strong>NEXORA SMM</strong><span>ADMIN CONSOLE · v1.4.0</span></div></a>
+      <div class="admin-user"><div class="admin-avatar" id="adminAvatar">NX</div><div><small data-km="អ្នកគ្រប់គ្រង" data-en="Administrator">អ្នកគ្រប់គ្រង</small><strong id="adminName">Checking...</strong><span id="adminEmail"></span><em id="adminRole">—</em></div></div>
       <nav>
         <button class="admin-nav active" data-section="overview">▦ <span data-km="សង្ខេប" data-en="Overview">សង្ខេប</span></button>
         <button class="admin-nav" data-section="users">◎ <span data-km="អ្នកប្រើ" data-en="Users">អ្នកប្រើ</span></button>
+        <button class="admin-nav" data-section="services">◆ <span data-km="សេវាកម្ម" data-en="Services">សេវាកម្ម</span></button>
         <button class="admin-nav" data-section="orders">▣ <span data-km="Orders" data-en="Orders">Orders</span></button>
         <button class="admin-nav" data-section="tickets">◌ <span data-km="Tickets" data-en="Tickets">Tickets</span></button>
       </nav>
@@ -28,7 +29,7 @@
     <main class="admin-main">
       <header class="admin-topbar">
         <div><small>NEXORA CONTROL CENTER</small><h1 data-km="ផ្ទាំងគ្រប់គ្រង" data-en="Admin dashboard">ផ្ទាំងគ្រប់គ្រង</h1></div>
-        <div class="admin-actions"><div class="lang-switch"><button class="lang active" data-lang="km">ខ្មែរ</button><button class="lang" data-lang="en">EN</button></div><a class="ghost-btn" href="index.html" data-km="← Dashboard" data-en="← Dashboard">← Dashboard</a><button class="danger-btn" id="adminLogout" data-km="ចាកចេញ" data-en="Logout">ចាកចេញ</button></div>
+        <div class="admin-actions"><div class="lang-switch"><button class="lang active" data-lang="km">ខ្មែរ</button><button class="lang" data-lang="en">EN</button></div><a class="ghost-btn" href="index.html">← Dashboard</a><button class="danger-btn" id="adminLogout" data-km="ចាកចេញ" data-en="Logout">ចាកចេញ</button></div>
       </header>
 
       <section id="gate" class="gate-card"><div class="spinner"></div><h2 data-km="កំពុងពិនិត្យសិទ្ធិ Admin..." data-en="Checking admin access...">កំពុងពិនិត្យសិទ្ធិ Admin...</h2><p id="gateMessage" data-km="សូមរង់ចាំបន្តិច។" data-en="Please wait a moment.">សូមរង់ចាំបន្តិច។</p></section>
@@ -36,19 +37,37 @@
       <div id="adminApp" hidden>
         <section class="stats-grid">
           <article><span data-km="អ្នកប្រើ" data-en="Users">អ្នកប្រើ</span><strong id="statUsers">0</strong><small>Profiles</small></article>
+          <article><span data-km="សេវាកម្មសកម្ម" data-en="Active services">សេវាកម្មសកម្ម</span><strong id="statServices">0</strong><small>Catalog</small></article>
           <article><span>Orders</span><strong id="statOrders">0</strong><small>All requests</small></article>
           <article><span>Tickets</span><strong id="statTickets">0</strong><small>Support</small></article>
           <article class="accent"><span data-km="Wallet សរុប" data-en="Total wallet">Wallet សរុប</span><strong id="statWallet">$0.00</strong><small>Read only</small></article>
         </section>
 
         <section class="admin-section active" id="section-overview">
-          <div class="panel-head"><div><small>OVERVIEW</small><h2 data-km="សកម្មភាពថ្មីៗ" data-en="Recent activity">សកម្មភាពថ្មីៗ</h2></div><button class="refresh-btn" id="refreshAdmin">↻ <span data-km="Refresh" data-en="Refresh">Refresh</span></button></div>
+          <div class="panel-head"><div><small>OVERVIEW · v1.4.0</small><h2 data-km="សកម្មភាពថ្មីៗ" data-en="Recent activity">សកម្មភាពថ្មីៗ</h2></div><button class="refresh-btn" id="refreshAdmin">↻ <span data-km="Refresh" data-en="Refresh">Refresh</span></button></div>
           <div class="overview-grid"><div class="panel"><h3 data-km="Orders ថ្មីៗ" data-en="Recent orders">Orders ថ្មីៗ</h3><div id="recentOrders"></div></div><div class="panel"><h3 data-km="Tickets ថ្មីៗ" data-en="Recent tickets">Tickets ថ្មីៗ</h3><div id="recentTickets"></div></div></div>
         </section>
 
         <section class="admin-section" id="section-users">
-          <div class="panel-head"><div><small>USERS</small><h2 data-km="គណនីអ្នកប្រើ" data-en="User accounts">គណនីអ្នកប្រើ</h2></div><input class="search" id="userSearch" type="search" placeholder="Search name / user id"></div>
-          <div class="panel table-wrap"><table><thead><tr><th>User</th><th>Joined</th><th>Balance</th></tr></thead><tbody id="usersTable"></tbody></table></div>
+          <div class="panel-head"><div><small>USER MANAGEMENT</small><h2 data-km="គណនីអ្នកប្រើ" data-en="User accounts">គណនីអ្នកប្រើ</h2><p data-km="ស្វែងរក និងត្រងអ្នកប្រើតាមសកម្មភាព។" data-en="Search and filter users by activity.">ស្វែងរក និងត្រងអ្នកប្រើតាមសកម្មភាព។</p></div><div class="toolbar"><input class="search" id="userSearch" type="search" placeholder="Search name / user id"><select class="search" id="userFilter"><option value="all">All users</option><option value="orders">Has orders</option><option value="tickets">Has tickets</option><option value="balance">Balance &gt; 0</option></select></div></div>
+          <div class="panel table-wrap"><table><thead><tr><th>User</th><th>Joined</th><th>Orders</th><th>Tickets</th><th>Balance</th></tr></thead><tbody id="usersTable"></tbody></table></div>
+        </section>
+
+        <section class="admin-section" id="section-services">
+          <div class="panel-head"><div><small>SERVICE MANAGEMENT</small><h2 data-km="គ្រប់គ្រងសេវាកម្ម" data-en="Manage services">គ្រប់គ្រងសេវាកម្ម</h2><p data-km="បង្កើត កែ និងបិទ/បើកសេវាកម្មដោយមិនលុបប្រវត្តិ។" data-en="Create, edit, activate or pause services without deleting history.">បង្កើត កែ និងបិទ/បើកសេវាកម្មដោយមិនលុបប្រវត្តិ។</p></div><button class="refresh-btn" id="newService">＋ <span data-km="សេវាថ្មី" data-en="New service">សេវាថ្មី</span></button></div>
+          <div class="service-admin-grid">
+            <form class="panel service-form" id="serviceForm">
+              <div class="form-title"><div><small id="serviceFormMode">CREATE</small><h3 data-km="ព័ត៌មានសេវាកម្ម" data-en="Service details">ព័ត៌មានសេវាកម្ម</h3></div><span class="role-note" id="servicePermission">Owner/Admin</span></div>
+              <div class="form-grid two"><label><span>Service ID</span><input id="serviceId" required maxlength="64" pattern="[a-z0-9][a-z0-9-]{1,63}" placeholder="example-service"></label><label><span data-km="លំដាប់" data-en="Sort order">លំដាប់</span><input id="serviceSort" type="number" value="100"></label></div>
+              <div class="form-grid two"><label><span>Name Khmer</span><input id="serviceNameKm" required maxlength="120"></label><label><span>Name English</span><input id="serviceNameEn" required maxlength="120"></label></div>
+              <div class="form-grid two"><label><span>Category</span><select id="serviceCategory"><option value="content">Content & Publishing</option><option value="ads">Advertising Support</option><option value="analytics">Analytics & SEO</option><option value="community">Community Management</option></select></label><label><span>Platform</span><select id="servicePlatform"><option value="all">All</option><option value="tiktok">TikTok</option><option value="facebook">Facebook</option><option value="youtube">YouTube</option><option value="instagram">Instagram</option><option value="telegram">Telegram</option><option value="website">Website</option></select></label></div>
+              <div class="form-grid three"><label><span>Price ($)</span><input id="servicePrice" type="number" min="0" step="0.01" value="10" required></label><label><span>Min</span><input id="serviceMin" type="number" min="1" value="1" required></label><label><span>Max</span><input id="serviceMax" type="number" min="1" value="10" required></label></div>
+              <label><span>Details Khmer</span><textarea id="serviceDetailsKm" rows="3"></textarea></label><label><span>Details English</span><textarea id="serviceDetailsEn" rows="3"></textarea></label>
+              <label class="check-row"><input id="serviceActive" type="checkbox" checked><span data-km="បើកសេវាកម្ម" data-en="Service active">បើកសេវាកម្ម</span></label>
+              <div class="form-actions"><button class="primary-btn" id="saveService" type="submit" data-km="រក្សាទុកសេវា" data-en="Save service">រក្សាទុកសេវា</button><button class="ghost-btn" id="cancelServiceEdit" type="button" data-km="សម្អាត Form" data-en="Reset form">សម្អាត Form</button></div><p class="form-status" id="serviceStatus"></p>
+            </form>
+            <div class="panel table-wrap service-table-panel"><div class="mini-toolbar"><input class="search" id="serviceSearchAdmin" type="search" placeholder="Search services"><select class="search" id="serviceStatusFilter"><option value="all">All</option><option value="active">Active</option><option value="paused">Paused</option></select></div><table><thead><tr><th>Service</th><th>Platform</th><th>Price</th><th>Range</th><th>Status</th><th></th></tr></thead><tbody id="servicesTable"></tbody></table></div>
+          </div>
         </section>
 
         <section class="admin-section" id="section-orders">
