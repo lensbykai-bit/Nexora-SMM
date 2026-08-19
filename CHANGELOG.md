@@ -1,15 +1,22 @@
-# Nexora SMM Changelog
+# Changelog
+
+## v1.2.0 — Supabase Ready — 2026-08-20
+- Added Supabase Auth integration with Demo fallback.
+- Added `backend.js` abstraction and `supabase-config.js`.
+- Added database schema for profiles, wallets, wallet transactions, order requests and tickets.
+- Added Row Level Security policies so users can access only their own rows.
+- Added automatic profile/wallet creation on signup.
+- Dashboard can load profile, orders, tickets and wallet data from Supabase.
+- Real-mode order requests and tickets can be saved to the database.
+- Wallet remains read-only from the browser; payment processing is not connected.
+- Updated Login/Register and dashboard labels to v1.2.0.
 
 ## v1.1.0 — Pink Luxe UX — 2026-08-20
-- Added visible version system.
-- Added notification dropdown with unread state.
-- Added service favorites and Favorites order tab.
-- Added demo balance simulation and demo fund history.
-- Added recent activity dashboard.
-- Improved services, tickets, mass-order preview, profile menu, and responsive layouts.
-- Kept all payment/API behavior as frontend demo only; no secrets are stored in the frontend.
+- Added version system.
+- Added notifications, favorites, fund history and recent activity.
+- Improved responsive UI and profile menu.
 
 ## v1.0.0 — Pink Luxe Base — 2026-08-20
-- Pink Luxe dashboard base theme.
+- Initial Pink Luxe theme.
 - Khmer + English UI.
-- Demo login/register and per-account browser storage.
+- Demo account flow and dashboard foundation.

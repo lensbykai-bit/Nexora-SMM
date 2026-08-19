@@ -1,26 +1,30 @@
-# Nexora SMM — Pink Luxe v1.1.0
+# Nexora SMM v1.2.0
 
-Bilingual Khmer/English dashboard theme with a compact SMM-style layout and a premium pink/plum visual system.
+Pink Luxe bilingual Khmer/English dashboard with Supabase-ready authentication and persistent user data.
 
-## v1.1.0 highlights
-- Visible version system and changelog
-- Notifications dropdown
-- Favorite services and Favorites order tab
-- Demo balance + demo fund history
-- Recent activity dashboard
-- Demo tickets and mass-order preview
-- Responsive desktop/tablet/mobile layout
-- Demo login/register flow
+## Current release
+- Version: `1.2.0`
+- Supabase project connected with public browser configuration
+- Email/password authentication
+- Profiles
+- Read-only wallet balance in browser
+- User order requests
+- Support tickets
+- Row Level Security (RLS)
+
+## Important security notes
+Only the Supabase **publishable key** belongs in `supabase-config.js`. Never commit a `service_role` key, database password, payment secret, or other private credential to a public repository.
+
+Wallet balance changes, payment verification, final prices, and privileged order status changes must be performed by a trusted server or Supabase Edge Function in a later release.
 
 ## Files
 - `index.html` — dashboard
-- `style.css` — Pink Luxe dashboard theme
-- `script.js` — dashboard demo interactions
-- `login.html` / `register.html` — demo account pages
-- `auth.css` / `auth.js` — auth theme and demo flow
-- `logo.svg` — Nexora SMM logo
-- `VERSION` — current version
-- `CHANGELOG.md` — release history
-
-## Important
-This is a front-end demo. Real authentication, payments, balances, orders, APIs, and database storage require a secure backend. Never put private API keys, payment secrets, or passwords in public frontend files.
+- `login.html` / `register.html` — authentication UI
+- `style.css` / `auth.css` — Pink Luxe theme
+- `script.js` — dashboard behavior
+- `auth.js` — auth flow
+- `backend.js` — Supabase data layer
+- `supabase-config.js` — public Supabase browser config
+- `supabase/schema.sql` — tables, RLS and signup trigger
+- `SUPABASE_SETUP.md` — setup notes
+- `VERSION` — release number
