@@ -2,7 +2,7 @@
 <html lang="km">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Nexora SMM — Login v1.2.0</title>
+  <title>Nexora SMM — Login v1.2.1</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Khmer:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="icon" href="logo.svg" type="image/svg+xml"><link rel="stylesheet" href="auth.css">
@@ -10,11 +10,11 @@
 <body>
 <main class="auth-shell">
   <section class="auth-brand">
-    <div class="brand-lockup"><img src="logo.svg" alt="Nexora SMM"><div><strong>NEXORA SMM</strong><span>Pink Luxe · v1.2.0</span></div></div>
+    <div class="brand-lockup"><img src="logo.svg" alt="Nexora SMM"><div><strong>NEXORA SMM</strong><span>Pink Luxe · v1.2.1</span></div></div>
     <div class="brand-copy"><span class="eyebrow">NEXORA ACCOUNT</span><h1 data-km="គណនីមួយ សម្រាប់ Dashboard របស់អ្នក" data-en="One account for your dashboard">គណនីមួយ សម្រាប់ Dashboard របស់អ្នក</h1><p data-km="ចូលទៅកាន់ Orders, Services, Favorites, Tickets និង Demo Balance ក្នុងកន្លែងតែមួយ។" data-en="Access orders, services, favorites, tickets and demo balance in one place.">ចូលទៅកាន់ Orders, Services, Favorites, Tickets និង Demo Balance ក្នុងកន្លែងតែមួយ។</p></div>
-    <div class="brand-points"><div><strong>Pink Luxe</strong><span>Premium UI</span></div><div><strong data-km="ពីរភាសា" data-en="Bilingual">ពីរភាសា</strong><span>Khmer + English</span></div><div><strong>v1.2.0</strong><span>UX Release</span></div></div>
+    <div class="brand-points"><div><strong>Pink Luxe</strong><span>Premium UI</span></div><div><strong data-km="ពីរភាសា" data-en="Bilingual">ពីរភាសា</strong><span>Khmer + English</span></div><div><strong>v1.2.1</strong><span>Login Hotfix</span></div></div>
   </section>
-  <section class="auth-main"><div class="auth-card"><div class="auth-top"><div><span class="eyebrow">SIGN IN</span><h2 data-km="ចូលគណនី" data-en="Sign in">ចូលគណនី</h2><p data-km="បើ Supabase បានកំណត់ វានឹង Login ជាគណនីពិត។ បើមិនទាន់កំណត់ វានឹងប្រើ Demo mode។" data-en="With Supabase configured, this signs into a real account. Otherwise it uses demo mode.">បើ Supabase បានកំណត់ វានឹង Login ជាគណនីពិត។ បើមិនទាន់កំណត់ វានឹងប្រើ Demo mode។</p></div><div class="lang-switch"><button class="lang-btn active" data-lang="km">ខ្មែរ</button><button class="lang-btn" data-lang="en">EN</button></div></div>
+  <section class="auth-main"><div class="auth-card"><div class="auth-top"><div><span class="eyebrow">SIGN IN</span><h2 data-km="ចូលគណនី" data-en="Sign in">ចូលគណនី</h2><p data-km="ចូលដោយគណនី Supabase ដែលបានបង្កើតរួច។" data-en="Sign in with an existing Supabase account.">ចូលដោយគណនី Supabase ដែលបានបង្កើតរួច។</p></div><div class="lang-switch"><button class="lang-btn active" data-lang="km">ខ្មែរ</button><button class="lang-btn" data-lang="en">EN</button></div></div>
     <form class="auth-form" id="loginForm"><label><span>Email</span><input id="loginEmail" type="email" required placeholder="you@example.com"></label><label><span>Password</span><div class="password-wrap"><input id="loginPassword" type="password" minlength="6" required><button type="button" class="toggle-pass" data-target="loginPassword">◉</button></div></label><button class="primary-btn" type="submit" data-km="ចូល Dashboard" data-en="Open dashboard">ចូល Dashboard</button><p class="auth-status" id="authStatus"></p></form>
-    <div class="secondary-link"><span data-km="មិនទាន់មានគណនី?" data-en="No account yet?">មិនទាន់មានគណនី?</span> <a href="register.html" data-km="បង្កើតគណនី" data-en="Create account">បង្កើតគណនី</a></div><div class="demo-note" data-km="Mode អាស្រ័យលើ Supabase config។ ក្នុង Demo mode កុំប្រើ Password ពិត។" data-en="Mode depends on the Supabase config. In demo mode, do not use a real password.">Mode អាស្រ័យលើ Supabase config។ ក្នុង Demo mode កុំប្រើ Password ពិត។</div></div></section>
+    <div class="secondary-link"><span data-km="មិនទាន់មានគណនី?" data-en="No account yet?">មិនទាន់មានគណនី?</span> <a href="register.html" data-km="បង្កើតគណនី" data-en="Create account">បង្កើតគណនី</a></div><div class="demo-note" data-km="បើនេះជាលើកដំបូងបន្ទាប់ពីភ្ជាប់ Supabase សូមចុច «បង្កើតគណនី» មុន។ គណនី Demo ចាស់មិនត្រូវបានបម្លែងទៅ Supabase ដោយស្វ័យប្រវត្តិទេ។" data-en="If this is your first time after Supabase was connected, create an account first. Old demo accounts are not automatically migrated to Supabase.">បើនេះជាលើកដំបូងបន្ទាប់ពីភ្ជាប់ Supabase សូមចុច «បង្កើតគណនី» មុន។ គណនី Demo ចាស់មិនត្រូវបានបម្លែងទៅ Supabase ដោយស្វ័យប្រវត្តិទេ។</div></div></section>
 </main><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js"></script><script src="backend.js"></script><script src="auth.js"></script></body></html>
