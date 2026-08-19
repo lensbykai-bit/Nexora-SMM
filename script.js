@@ -11,17 +11,35 @@ const services = [
 let lang='km', selectedPlatform='all', demoOrders=[];
 const $=id=>document.getElementById(id);
 const sidebar=$('sidebar'), category=$('categorySelect'), service=$('serviceSelect'), search=$('serviceSearch'), quantity=$('quantity');
-function translate(){document.documentElement.lang=lang;document.querySelectorAll('[data-km][data-en]').forEach(el=>el.textContent=el.dataset[lang]);document.querySelectorAll('option[data-km][data-en]').forEach(el=>el.textContent=el.dataset[lang]);document.querySelectorAll('.lang').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));refreshServices();renderOrders();renderServiceCards()}
+
+function translate(){
+  document.documentElement.lang=lang;
+  document.querySelectorAll('[data-km][data-en]').forEach(el=>el.textContent=el.dataset[lang]);
+  document.querySelectorAll('option[data-km][data-en]').forEach(el=>el.textContent=el.dataset[lang]);
+  document.querySelectorAll('.lang').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+  refreshServices(); renderOrders(); renderServiceCards();
+}
+
 document.querySelectorAll('.lang').forEach(b=>b.addEventListener('click',()=>{lang=b.dataset.lang;translate()}));
 $('menuToggle').addEventListener('click',()=>sidebar.classList.toggle('closed'));
 $('showMore').addEventListener('click',()=>{$('moreMenu').classList.toggle('open');$('showMore').classList.toggle('active')});
-document.querySelectorAll('.nav-item[data-view]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.nav-item[data-view]').forEach(x=>x.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));$(btn.dataset.view)?.classList.add('active');if(innerWidth<981)sidebar.classList.add('closed')}));
-document.querySelectorAll('.platform').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.platform').forEach(x=>x.classList.remove('active'));btn.classList.add('active');selectedPlatform=btn.dataset.platform;refreshServices()}));
+
+document.querySelectorAll('.nav-item[data-view]').forEach(btn=>btn.addEventListener('click',()=>{
+  document.querySelectorAll('.nav-item[data-view]').forEach(x=>x.classList.remove('active'));btn.classList.add('active');
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));$(btn.dataset.view)?.classList.add('active');
+  if(innerWidth<981) sidebar.classList.add('closed');
+}));
+
+document.querySelectorAll('.platform').forEach(btn=>btn.addEventListener('click',()=>{
+  document.querySelectorAll('.platform').forEach(x=>x.classList.remove('active'));btn.classList.add('active');selectedPlatform=btn.dataset.platform;refreshServices();
+}));
+
 function filtered(){const q=search.value.trim().toLowerCase();return services.filter(s=>(selectedPlatform==='all'||s.platform==='all'||s.platform===selectedPlatform)&&(category.value==='all'||s.category===category.value)&&(!q||s.name.km.toLowerCase().includes(q)||s.name.en.toLowerCase().includes(q)))}
 function current(){return services.find(s=>s.id===service.value)}
 function refreshServices(){const list=filtered();service.innerHTML=list.length?list.map(s=>`<option value="${s.id}">${s.name[lang]} · $${s.price.toFixed(2)}</option>`).join(''):`<option value="">${lang==='km'?'មិនមានសេវាកម្មត្រូវគ្នា':'No matching services'}</option>`;updateDetails()}
 function updateDetails(){const s=current();if(!s){$('avgTime').value='';$('charge').value='$0.00';$('serviceDetails').textContent=lang==='km'?'មិនទាន់ជ្រើសសេវាកម្ម។':'No service selected.';return}const qty=Math.min(s.max,Math.max(s.min,Number(quantity.value)||s.min));quantity.value=qty;$('avgTime').value=s.time[lang];$('charge').value=`$${(s.price*qty).toFixed(2)}`;$('rangeText').textContent=`Min: ${s.min} · Max: ${s.max}`;$('startTime').textContent=s.start[lang];$('speed').textContent=s.speed[lang];$('guarantee').textContent=s.scope[lang];$('detailAvg').textContent=s.time[lang];$('serviceDetails').textContent=s.details[lang];$('exampleLink').textContent=lang==='km'?'តំណសាធារណៈរបស់ Page ឬ Project':'Public page or project URL'}
 category.addEventListener('change',refreshServices);search.addEventListener('input',refreshServices);service.addEventListener('change',updateDetails);quantity.addEventListener('input',updateDetails);
+
 $('submitOrder').addEventListener('click',()=>{const s=current();if(!s)return;const qty=Number(quantity.value)||1;demoOrders.unshift({service:s,total:s.price*qty,link:$('projectLink').value.trim()});renderOrders();$('formNote').textContent=lang==='km'?'បានបន្ថែមសំណើសាកល្បង។ មិនមានការទូទាត់ ឬ Order ពិតត្រូវបានផ្ញើទេ។':'Demo request added. No payment or real order was sent.'});
 function renderOrders(){const box=$('ordersList');$('summaryOrders').textContent=` ${demoOrders.length}`;const total=demoOrders.reduce((a,o)=>a+o.total,0);$('summarySpend').textContent=` $${total.toFixed(2)}`;if(!demoOrders.length){box.className='empty-state';box.textContent=lang==='km'?'មិនទាន់មានការបញ្ជាទិញសាកល្បងទេ។':'No demo orders yet.';return}box.className='';box.innerHTML=demoOrders.map((o,i)=>`<div class="order-item"><div><strong>#${String(i+1).padStart(4,'0')} · ${o.service.name[lang]}</strong><br>${o.link||(lang==='km'?'គ្មានតំណ':'No link')}</div><div>$${o.total.toFixed(2)}</div><div class="status-chip">${lang==='km'?'សាកល្បង':'Demo'}</div></div>`).join('')}
 function renderServiceCards(){$('serviceCards').innerHTML=services.map(s=>`<article class="service-card"><h3>${s.name[lang]}</h3><p>${s.details[lang].split('\n')[0]}</p><b>$${s.price.toFixed(2)}</b></article>`).join('')}
