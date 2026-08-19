@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.3.0 — Admin Console Foundation — 2026-08-20
+- Added `admin.html`, `admin.css` and `admin.js` with the Pink Luxe admin design.
+- Added secure `admin_users` role table and `is_admin()` access check.
+- Added RLS policies allowing admins to view profiles, wallets, orders and tickets.
+- Added admin-only order status and ticket status management.
+- Wallet balances remain read-only in the browser/admin console.
+- Added `supabase/admin-v1.3.0.sql` migration reference.
+- Applied the admin migration to the connected Supabase project.
+
 ## v1.2.1 — Login Hotfix — 2026-08-20
 - Diagnosed Supabase sign-in failures caused by accounts not yet existing in Supabase Auth.
 - Added clear bilingual messages for invalid credentials, unconfirmed email, existing account and disabled signup errors.
