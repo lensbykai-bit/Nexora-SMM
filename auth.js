@@ -1,103 +1,20 @@
-const AUTH_VERSION='1.2.1';
+const AUTH_VERSION='1.4.0';
 let authLang=localStorage.getItem('nexora_lang')||'km';
 const backend=window.NexoraBackend;
 const realMode=Boolean(backend?.isConfigured);
-
-function setAuthLanguage(next){
-  authLang=next;
-  document.documentElement.lang=authLang;
-  document.querySelectorAll('[data-km][data-en]').forEach(el=>el.textContent=el.dataset[authLang]);
-  document.querySelectorAll('.lang-btn').forEach(btn=>btn.classList.toggle('active',btn.dataset.lang===authLang));
-  localStorage.setItem('nexora_lang',authLang);
+function stampAuthVersion(){
+  document.title=`Nexora SMM — ${document.getElementById('loginForm')?'Login':'Register'} v${AUTH_VERSION}`;
+  const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let node;
+  while((node=walker.nextNode())){if(/v1\.[0-9]+\.[0-9]+/.test(node.nodeValue))node.nodeValue=node.nodeValue.replace(/v1\.[0-9]+\.[0-9]+/g,`v${AUTH_VERSION}`)}
 }
+function setAuthLanguage(next){authLang=next;document.documentElement.lang=authLang;document.querySelectorAll('[data-km][data-en]').forEach(el=>el.textContent=el.dataset[authLang]);document.querySelectorAll('.lang-btn').forEach(btn=>btn.classList.toggle('active',btn.dataset.lang===authLang));localStorage.setItem('nexora_lang',authLang)}
 function msg(km,en){return authLang==='km'?km:en}
 function statusText(text){const status=document.getElementById('authStatus');if(status)status.textContent=text}
 function lockForm(form,locked){form?.querySelectorAll('input,button').forEach(el=>{if(!el.classList.contains('lang-btn'))el.disabled=locked})}
-
-function friendlyAuthError(error,action){
-  const code=String(error?.code||'').toLowerCase();
-  const raw=String(error?.message||'').toLowerCase();
-  if(code==='invalid_credentials'||raw.includes('invalid login credentials')){
-    return msg('Email/Password មិនត្រូវ ឬគណនីនេះមិនទាន់បានបង្កើតនៅ Supabase ទេ។ បើជាលើកដំបូង សូមចុច «បង្កើតគណនី» មុន។','Email/password is incorrect, or this account has not been created in Supabase yet. If this is your first time, create an account first.');
-  }
-  if(code==='email_not_confirmed'||raw.includes('email not confirmed')){
-    return msg('Email មិនទាន់បានបញ្ជាក់។ សូមបើក Email របស់អ្នក ហើយចុច Confirm រួច Login ម្តងទៀត។','Your email is not confirmed yet. Open your email, confirm the account, then sign in again.');
-  }
-  if(code==='user_already_exists'||raw.includes('already registered')||raw.includes('already exists')){
-    return msg('Email នេះមានគណនីរួចហើយ។ សូមត្រឡប់ទៅ Login ឬប្រើការកំណត់ Password ឡើងវិញ។','An account with this email already exists. Return to sign in or reset the password.');
-  }
-  if(code==='signup_disabled'||raw.includes('signups not allowed')){
-    return msg('ការបង្កើតគណនីត្រូវបានបិទនៅ Supabase។','Account registration is disabled in Supabase.');
-  }
-  return error?.message||msg(action==='signup'?'មិនអាចបង្កើតគណនីបាន។':'មិនអាចចូលគណនីបាន។',action==='signup'?'Unable to create account.':'Unable to sign in.');
-}
-
-async function redirectIfSignedIn(){
-  if(!realMode)return;
-  try{
-    const identity=await backend.getIdentity();
-    if(identity)location.replace('index.html');
-  }catch{}
-}
-
+function friendlyAuthError(error,action){const code=String(error?.code||'').toLowerCase(),raw=String(error?.message||'').toLowerCase();if(code==='invalid_credentials'||raw.includes('invalid login credentials'))return msg('Email/Password មិនត្រូវ ឬគណនីនេះមិនទាន់បានបង្កើតនៅ Supabase ទេ។ បើជាលើកដំបូង សូមចុច «បង្កើតគណនី» មុន។','Email/password is incorrect, or this account has not been created in Supabase yet. If this is your first time, create an account first.');if(code==='email_not_confirmed'||raw.includes('email not confirmed'))return msg('Email មិនទាន់បានបញ្ជាក់។ សូមបើក Email របស់អ្នក ហើយចុច Confirm រួច Login ម្តងទៀត។','Your email is not confirmed yet. Open your email, confirm the account, then sign in again.');if(code==='user_already_exists'||raw.includes('already registered')||raw.includes('already exists'))return msg('Email នេះមានគណនីរួចហើយ។ សូមត្រឡប់ទៅ Login ឬប្រើការកំណត់ Password ឡើងវិញ។','An account with this email already exists. Return to sign in or reset the password.');if(code==='signup_disabled'||raw.includes('signups not allowed'))return msg('ការបង្កើតគណនីត្រូវបានបិទនៅ Supabase។','Account registration is disabled in Supabase.');return error?.message||msg(action==='signup'?'មិនអាចបង្កើតគណនីបាន។':'មិនអាចចូលគណនីបាន។',action==='signup'?'Unable to create account.':'Unable to sign in.')}
+async function redirectIfSignedIn(){if(!realMode)return;try{const identity=await backend.getIdentity();if(identity)location.replace('index.html')}catch{}}
 document.querySelectorAll('.lang-btn').forEach(btn=>btn.addEventListener('click',()=>setAuthLanguage(btn.dataset.lang)));
-document.querySelectorAll('.toggle-pass').forEach(btn=>btn.addEventListener('click',()=>{
-  const input=document.getElementById(btn.dataset.target);if(!input)return;
-  input.type=input.type==='password'?'text':'password';
-  btn.textContent=input.type==='password'?'◉':'◎';
-}));
-
-const loginForm=document.getElementById('loginForm');
-loginForm?.addEventListener('submit',async e=>{
-  e.preventDefault();
-  const email=document.getElementById('loginEmail').value.trim();
-  const password=document.getElementById('loginPassword').value;
-  if(!email||password.length<6){statusText(msg('សូមបញ្ចូល Email និង Password យ៉ាងតិច 6 តួអក្សរ។','Enter an email and a password with at least 6 characters.'));return}
-  lockForm(loginForm,true);
-  statusText(realMode?msg('កំពុងចូលគណនី Supabase...','Signing in with Supabase...'):msg('កំពុងចូល Demo...','Signing in to demo mode...'));
-  try{
-    const result=await backend.signIn({email,password});
-    if(result.mode==='demo')localStorage.setItem('nexora_demo_user',JSON.stringify({email,displayName:email.split('@')[0]}));
-    statusText(realMode?msg('បានចូលគណនីពិត។ កំពុងបើក Dashboard...','Signed in. Opening dashboard...'):msg('បានចូល Demo។ កំពុងបើក Dashboard...','Demo sign-in successful. Opening dashboard...'));
-    setTimeout(()=>location.href='index.html',350);
-  }catch(error){
-    statusText(friendlyAuthError(error,'signin'));
-    lockForm(loginForm,false);
-  }
-});
-
-const registerForm=document.getElementById('registerForm');
-registerForm?.addEventListener('submit',async e=>{
-  e.preventDefault();
-  const name=document.getElementById('registerName').value.trim();
-  const email=document.getElementById('registerEmail').value.trim();
-  const password=document.getElementById('registerPassword').value;
-  const confirm=document.getElementById('confirmPassword').value;
-  if(name.length<2||!email){statusText(msg('សូមបញ្ចូលឈ្មោះ និង Email ឱ្យបានត្រឹមត្រូវ។','Enter a valid name and email.'));return}
-  if(password.length<6){statusText(msg('Password ត្រូវមានយ៉ាងតិច 6 តួអក្សរ។','Password must be at least 6 characters.'));return}
-  if(password!==confirm){statusText(msg('Password ទាំងពីរមិនដូចគ្នា។','Passwords do not match.'));return}
-  lockForm(registerForm,true);
-  statusText(realMode?msg('កំពុងបង្កើត Supabase Account...','Creating Supabase account...'):msg('កំពុងបង្កើត Demo Account...','Creating demo account...'));
-  try{
-    const result=await backend.signUp({name,email,password});
-    if(result.mode==='demo'){
-      localStorage.setItem('nexora_demo_user',JSON.stringify({email,displayName:name}));
-      statusText(msg('បានបង្កើត Demo Account។ កំពុងបើក Dashboard...','Demo account created. Opening dashboard...'));
-      setTimeout(()=>location.href='index.html',350);
-      return;
-    }
-    if(result.session){
-      statusText(msg('បានបង្កើតគណនី។ កំពុងបើក Dashboard...','Account created. Opening dashboard...'));
-      setTimeout(()=>location.href='index.html',350);
-    }else{
-      statusText(msg('បានបង្កើតគណនី។ សូមពិនិត្យ Email ដើម្បីបញ្ជាក់គណនី រួច Login។','Account created. Check your email to confirm it, then sign in.'));
-      lockForm(registerForm,false);
-    }
-  }catch(error){
-    statusText(friendlyAuthError(error,'signup'));
-    lockForm(registerForm,false);
-  }
-});
-
-setAuthLanguage(authLang);
-redirectIfSignedIn();
+document.querySelectorAll('.toggle-pass').forEach(btn=>btn.addEventListener('click',()=>{const input=document.getElementById(btn.dataset.target);if(!input)return;input.type=input.type==='password'?'text':'password';btn.textContent=input.type==='password'?'◉':'◎'}));
+const loginForm=document.getElementById('loginForm');loginForm?.addEventListener('submit',async e=>{e.preventDefault();const email=document.getElementById('loginEmail').value.trim(),password=document.getElementById('loginPassword').value;if(!email||password.length<6){statusText(msg('សូមបញ្ចូល Email និង Password យ៉ាងតិច 6 តួអក្សរ។','Enter an email and a password with at least 6 characters.'));return}lockForm(loginForm,true);statusText(realMode?msg('កំពុងចូលគណនី Supabase...','Signing in with Supabase...'):msg('កំពុងចូល Demo...','Signing in to demo mode...'));try{const result=await backend.signIn({email,password});if(result.mode==='demo')localStorage.setItem('nexora_demo_user',JSON.stringify({email,displayName:email.split('@')[0]}));statusText(realMode?msg('បានចូលគណនីពិត។ កំពុងបើក Dashboard...','Signed in. Opening dashboard...'):msg('បានចូល Demo។ កំពុងបើក Dashboard...','Demo sign-in successful. Opening dashboard...'));setTimeout(()=>location.href='index.html',350)}catch(error){statusText(friendlyAuthError(error,'signin'));lockForm(loginForm,false)}});
+const registerForm=document.getElementById('registerForm');registerForm?.addEventListener('submit',async e=>{e.preventDefault();const name=document.getElementById('registerName').value.trim(),email=document.getElementById('registerEmail').value.trim(),password=document.getElementById('registerPassword').value,confirm=document.getElementById('confirmPassword').value;if(name.length<2||!email){statusText(msg('សូមបញ្ចូលឈ្មោះ និង Email ឱ្យបានត្រឹមត្រូវ។','Enter a valid name and email.'));return}if(password.length<6){statusText(msg('Password ត្រូវមានយ៉ាងតិច 6 តួអក្សរ។','Password must be at least 6 characters.'));return}if(password!==confirm){statusText(msg('Password ទាំងពីរមិនដូចគ្នា។','Passwords do not match.'));return}lockForm(registerForm,true);statusText(realMode?msg('កំពុងបង្កើត Supabase Account...','Creating Supabase account...'):msg('កំពុងបង្កើត Demo Account...','Creating demo account...'));try{const result=await backend.signUp({name,email,password});if(result.mode==='demo'){localStorage.setItem('nexora_demo_user',JSON.stringify({email,displayName:name}));statusText(msg('បានបង្កើត Demo Account។ កំពុងបើក Dashboard...','Demo account created. Opening dashboard...'));setTimeout(()=>location.href='index.html',350);return}if(result.session){statusText(msg('បានបង្កើតគណនី។ កំពុងបើក Dashboard...','Account created. Opening dashboard...'));setTimeout(()=>location.href='index.html',350)}else{statusText(msg('បានបង្កើតគណនី។ សូមពិនិត្យ Email ដើម្បីបញ្ជាក់គណនី រួច Login។','Account created. Check your email to confirm it, then sign in.'));lockForm(registerForm,false)}}catch(error){statusText(friendlyAuthError(error,'signup'));lockForm(registerForm,false)}});
+stampAuthVersion();setAuthLanguage(authLang);redirectIfSignedIn();
