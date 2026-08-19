@@ -1,9 +1,11 @@
-# Nexora SMM v1.2.0
+# Nexora SMM — Pink Luxe v1.2.1
 
-Pink Luxe bilingual Khmer/English dashboard with Supabase-ready authentication and persistent user data.
+Nexora SMM is a bilingual Khmer/English dashboard theme with Supabase authentication and persistent user data.
 
 ## Current release
-- Version: `1.2.0`
+- Version: `1.2.1`
+- Login hotfix for first-time Supabase users
+- Clear bilingual messages for invalid credentials and unconfirmed email
 - Supabase project connected with public browser configuration
 - Email/password authentication
 - Profiles
@@ -11,6 +13,9 @@ Pink Luxe bilingual Khmer/English dashboard with Supabase-ready authentication a
 - User order requests
 - Support tickets
 - Row Level Security (RLS)
+
+## First-time login note
+Old Demo accounts are not automatically migrated into Supabase Auth. A user coming from the old Demo flow must use `register.html` once to create a real Supabase account, confirm the email if requested, then use `login.html`.
 
 ## Important security notes
 Only the Supabase **publishable key** belongs in `supabase-config.js`. Never commit a `service_role` key, database password, payment secret, or other private credential to a public repository.
