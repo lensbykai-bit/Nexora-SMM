@@ -1,0 +1,27 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="76" y1="54" x2="438" y2="464" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF8CC8"/>
+      <stop offset="0.5" stop-color="#F5439D"/>
+      <stop offset="1" stop-color="#C92D7B"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="168" y1="134" x2="354" y2="380" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#FFE1F1"/>
+    </linearGradient>
+    <filter id="shadow" x="34" y="34" width="444" height="444" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="20" stdDeviation="22" flood-color="#8E1E5A" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#shadow)">
+    <rect x="72" y="72" width="368" height="368" rx="112" fill="url(#bg)"/>
+    <rect x="86" y="86" width="340" height="340" rx="100" stroke="white" stroke-opacity="0.2" stroke-width="2"/>
+  </g>
+
+  <path d="M160 348V164C160 150.745 170.745 140 184 140H201.5C210.79 140 219.315 145.262 223.47 153.571L306 318.5V164C306 150.745 316.745 140 330 140H352V348H320.5C311.403 348 303.062 342.931 298.865 334.861L206 156.5V348H160Z" fill="url(#shine)"/>
+
+  <circle cx="377" cy="137" r="18" fill="#FFF3A6"/>
+  <path d="M377 100L384.5 128.5L413 136L384.5 143.5L377 172L369.5 143.5L341 136L369.5 128.5L377 100Z" fill="white" fill-opacity="0.95"/>
+  <circle cx="135" cy="368" r="10" fill="#FFD3E9" fill-opacity="0.9"/>
+</svg>
