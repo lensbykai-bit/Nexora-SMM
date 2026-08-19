@@ -1,12 +1,26 @@
-# Nexora SMM — Compact Pink Premium
+# Nexora SMM — Pink Luxe v1.1.0
 
-Compact bilingual Khmer/English SMM-style dashboard UI inspired by a classic two-column panel layout.
+Bilingual Khmer/English dashboard theme with a compact SMM-style layout and a premium pink/plum visual system.
+
+## v1.1.0 highlights
+- Visible version system and changelog
+- Notifications dropdown
+- Favorite services and Favorites order tab
+- Demo balance + demo fund history
+- Recent activity dashboard
+- Demo tickets and mass-order preview
+- Responsive desktop/tablet/mobile layout
+- Demo login/register flow
 
 ## Files
-- `index.html` — dashboard structure
-- `style.css` — Pink Premium compact design
-- `script.js` — language switcher, service filtering, demo orders
+- `index.html` — dashboard
+- `style.css` — Pink Luxe dashboard theme
+- `script.js` — dashboard demo interactions
+- `login.html` / `register.html` — demo account pages
+- `auth.css` / `auth.js` — auth theme and demo flow
 - `logo.svg` — Nexora SMM logo
+- `VERSION` — current version
+- `CHANGELOG.md` — release history
 
-## Notes
-This build is a front-end demo. Real authentication, payments, order processing, provider APIs, and account balances require a secure backend. Never place secret API keys in public GitHub files.
+## Important
+This is a front-end demo. Real authentication, payments, balances, orders, APIs, and database storage require a secure backend. Never put private API keys, payment secrets, or passwords in public frontend files.
