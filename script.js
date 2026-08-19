@@ -1,10 +1,10 @@
-const APP_VERSION='1.2.0';
+const APP_VERSION='1.4.0';
 const backend=window.NexoraBackend;
 const $=id=>document.getElementById(id);
 let lang=localStorage.getItem('nexora_lang')||'km';
 let selectedPlatform='all';
-let identity=null, orders=[], tickets=[], wallet={balance:0};
-const services=[
+let identity=null,orders=[],tickets=[],wallet={balance:0},adminAccess=null;
+const fallbackServices=[
 {id:'content-calendar',category:'content',platform:'all',price:12,min:1,max:20,name:{km:'ផែនការមាតិកាប្រចាំខែ',en:'Monthly Content Calendar'},time:{km:'1–2 ថ្ងៃ',en:'1–2 days'},start:{km:'ក្នុង 1 ថ្ងៃធ្វើការ',en:'Within 1 business day'},speed:{km:'ផែនការ 30 ថ្ងៃ',en:'30-day plan'},details:{km:'ផែនការមាតិកា 30 ថ្ងៃ សម្រាប់ Page ឬ Brand។',en:'A 30-day content planning package for a page or brand.'}},
 {id:'short-video',category:'content',platform:'tiktok',price:9,min:1,max:50,name:{km:'ផែនការវីដេអូខ្លី TikTok',en:'TikTok Short-form Content Plan'},time:{km:'1–2 ថ្ងៃ',en:'1–2 days'},start:{km:'ក្នុង 1 ថ្ងៃធ្វើការ',en:'Within 1 business day'},speed:{km:'10 វីដេអូ / កញ្ចប់',en:'10-video plan'},details:{km:'គំនិតវីដេអូខ្លី, Hook, Caption និង Posting Structure។',en:'Short-form ideas, hooks, captions and posting structure.'}},
 {id:'meta-ads',category:'ads',platform:'facebook',price:18,min:1,max:10,name:{km:'ពិនិត្យ Meta Ads Campaign',en:'Meta Ads Campaign Review'},time:{km:'2–3 ថ្ងៃ',en:'2–3 days'},start:{km:'ក្នុង 1 ថ្ងៃធ្វើការ',en:'Within 1 business day'},speed:{km:'ក្នុងមួយ Campaign',en:'Per campaign'},details:{km:'ពិនិត្យ Campaign Structure, Targeting, Creative និង Measurement Plan។',en:'Review campaign structure, targeting, creative organization and measurement planning.'}},
@@ -14,21 +14,44 @@ const services=[
 {id:'telegram-plan',category:'analytics',platform:'telegram',price:11,min:1,max:20,name:{km:'ផែនការ Telegram Channel',en:'Telegram Channel Strategy'},time:{km:'2 ថ្ងៃ',en:'2 days'},start:{km:'ក្នុង 1 ថ្ងៃធ្វើការ',en:'Within 1 business day'},speed:{km:'Strategy Report',en:'Strategy report'},details:{km:'Content, retention និង cross-promotion strategy។',en:'Content, retention and cross-promotion strategy.'}},
 {id:'traffic-audit',category:'analytics',platform:'website',price:16,min:1,max:20,name:{km:'Website Social Traffic Audit',en:'Website Social Traffic Audit'},time:{km:'2–3 ថ្ងៃ',en:'2–3 days'},start:{km:'ក្នុង 1 ថ្ងៃធ្វើការ',en:'Within 1 business day'},speed:{km:'Audit Report',en:'Audit report'},details:{km:'ពិនិត្យ Social-to-Website Funnel និង Tracking Setup។',en:'Audit the social-to-website funnel and tracking setup.'}}
 ];
-function msg(km,en){return lang==='km'?km:en}
-function initials(v){return (v||'NX').trim().split(/\s+/).slice(0,2).map(x=>x[0]||'').join('').toUpperCase()||'NX'}
-function money(v){return `$${Number(v||0).toFixed(2)}`}
+let services=[...fallbackServices];
+const msg=(km,en)=>lang==='km'?km:en;
+const initials=v=>(v||'NX').trim().split(/\s+/).slice(0,2).map(x=>x[0]||'').join('').toUpperCase()||'NX';
+const money=v=>`$${Number(v||0).toFixed(2)}`;
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+function stampVersion(){
+  document.title=`Nexora SMM — Pink Luxe v${APP_VERSION}`;
+  const meta=document.querySelector('meta[name="description"]');if(meta)meta.content=`Nexora SMM — Pink Luxe v${APP_VERSION} with Supabase`;
+  const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let node;
+  while((node=walker.nextNode())){if(/v1\.[0-9]+\.[0-9]+/.test(node.nodeValue))node.nodeValue=node.nodeValue.replace(/v1\.[0-9]+\.[0-9]+/g,`v${APP_VERSION}`)}
+}
+function mapDbService(r){return{id:r.id,category:r.category,platform:r.platform,price:Number(r.price||0),min:Number(r.min_quantity||1),max:Number(r.max_quantity||1),name:{km:r.name_km,en:r.name_en},time:{km:r.time_km||'',en:r.time_en||''},start:{km:r.start_km||'',en:r.start_en||''},speed:{km:r.speed_km||'',en:r.speed_en||''},details:{km:r.details_km||'',en:r.details_en||''}}}
 function setLanguage(next){lang=next;document.documentElement.lang=lang;localStorage.setItem('nexora_lang',lang);document.querySelectorAll('[data-km][data-en]').forEach(el=>el.textContent=el.dataset[lang]);document.querySelectorAll('.lang').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));renderServices();renderOrders();renderTickets();setupIdentity()}
 function setupIdentity(){if(!identity)return;const name=identity.displayName||identity.email?.split('@')[0]||'NexoraUser',init=initials(name);document.querySelectorAll('.avatar,.mini-user').forEach(x=>x.textContent=init);$('sidebarUser').textContent=msg(`អ្នកប្រើ៖ ${name}`,`User: ${name}`);$('topUserName').textContent=name;$('menuUserName').textContent=name;$('menuUserEmail').textContent=identity.email||'';$('accountAvatar').textContent=init;$('accountDisplay').textContent=name;$('accountEmail').textContent=identity.email||'';$('profileName').value=name;$('profileEmail').value=identity.email||'';$('fundUser').textContent=name}
+function setupAdminShortcut(){
+  document.querySelectorAll('[data-nexora-admin-shortcut]').forEach(x=>x.remove());
+  if(!adminAccess)return;
+  const menu=$('profileMenu');if(menu){const b=document.createElement('button');b.dataset.nexoraAdminShortcut='1';b.textContent=msg('ផ្ទាំង Admin','Admin Console');b.addEventListener('click',()=>location.href='admin.html');menu.insertBefore(b,menu.querySelector('.danger'))}
+  const account=document.querySelector('#account .account-summary');if(account){const a=document.createElement('a');a.dataset.nexoraAdminShortcut='1';a.href='admin.html';a.textContent=msg(`បើក Admin Console · ${adminAccess.role}`,`Open Admin Console · ${adminAccess.role}`);a.style.cssText='display:inline-flex;margin-top:10px;padding:8px 12px;border-radius:10px;text-decoration:none;background:#fff0f7;color:#d5297c;font-weight:700;border:1px solid #f4cade';account.appendChild(a)}
+}
 function filteredServices(){const q=($('serviceSearch')?.value||'').toLowerCase().trim(),cat=$('categorySelect')?.value||'all';return services.filter(s=>(selectedPlatform==='all'||s.platform==='all'||s.platform===selectedPlatform)&&(cat==='all'||s.category===cat)&&(!q||s.name.km.toLowerCase().includes(q)||s.name.en.toLowerCase().includes(q)))}
 function currentService(){return services.find(s=>s.id===$('serviceSelect')?.value)}
-function renderServices(){const sel=$('serviceSelect');if(sel){const list=filteredServices();sel.innerHTML=list.map(s=>`<option value="${s.id}">${s.name[lang]} · ${money(s.price)}</option>`).join('')||`<option value="">${msg('មិនមានសេវាកម្ម','No matching services')}</option>`}const cards=$('serviceCards');if(cards)cards.innerHTML=services.map(s=>`<article class="service-card"><h3>${s.name[lang]}</h3><p>${s.details[lang]}</p><b>${money(s.price)}</b></article>`).join('');updateServiceDetails()}
+function renderServices(){const sel=$('serviceSelect');if(sel){const old=sel.value,list=filteredServices();sel.innerHTML=list.map(s=>`<option value="${esc(s.id)}">${esc(s.name[lang])} · ${money(s.price)}</option>`).join('')||`<option value="">${msg('មិនមានសេវាកម្ម','No matching services')}</option>`;if(list.some(s=>s.id===old))sel.value=old}const cards=$('serviceCards');if(cards)cards.innerHTML=services.map(s=>`<article class="service-card"><h3>${esc(s.name[lang])}</h3><p>${esc(s.details[lang])}</p><b>${money(s.price)}</b></article>`).join('');updateServiceDetails()}
 function updateServiceDetails(){const s=currentService();if(!s){if($('charge'))$('charge').value='$0.00';return}const qty=Math.max(s.min,Math.min(s.max,Number($('quantity')?.value)||s.min));$('quantity').value=qty;$('avgTime').value=s.time[lang];$('charge').value=money(s.price*qty);$('rangeText').textContent=`Min: ${s.min} · Max: ${s.max}`;$('serviceTitle').textContent=s.name[lang];$('startTime').textContent=s.start[lang];$('speed').textContent=s.speed[lang];$('serviceDetails').textContent=s.details[lang]}
 function openView(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));$(id)?.classList.add('active');document.querySelectorAll('.nav-item[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===id));const label=document.querySelector(`.nav-item[data-view="${id}"] b`);if(label)$('currentViewLabel').textContent=label.textContent;if(innerWidth<981)$('sidebar')?.classList.add('closed')}
 function renderWallet(){const balance=Number(wallet?.balance||0);['sidebarBalance','summaryBalance','fundBalance','dashBalance'].forEach(id=>{if($(id))$(id).textContent=money(balance)});$('summaryBackend').textContent=backend?.isConfigured?'Supabase':'Demo';$('backendModeLabel').textContent=backend?.isConfigured?'Supabase connected':'Demo mode'}
-function renderOrders(){const box=$('ordersList');$('summaryOrders').textContent=orders.length;$('dashOrders').textContent=orders.length;if(!orders.length){box.className='empty-state';box.textContent=msg('មិនទាន់មាន Order ទេ។','No orders yet.');return}box.className='';box.innerHTML=orders.map(o=>{const s=services.find(x=>x.id===o.service_id)||{};return `<div class="order-item"><div><strong>#${o.id} · ${(s.name||{})[lang]||o.service_id}</strong><br>${o.link||''}</div><div>${o.quantity||1}</div><div class="status-chip">${o.status||'pending'}</div></div>`}).join('')}
-function renderTickets(){const box=$('ticketList');$('ticketBadge').textContent=tickets.length;$('summaryTickets').textContent=tickets.length;$('dashTickets').textContent=tickets.length;if(!tickets.length){box.innerHTML=`<div class="empty-state">${msg('មិនទាន់មាន Ticket ទេ។','No tickets yet.')}</div>`;return}box.innerHTML=tickets.map(t=>`<article class="ticket-card"><div><strong>${t.subject}</strong><span>${t.status}</span></div><p>${t.message}</p></article>`).join('')}
-async function loadData(){identity=await backend.getIdentity();if(!identity){location.replace('login.html');return}setupIdentity();try{[orders,tickets,wallet]=await Promise.all([backend.listOrders(),backend.listTickets(),backend.getWallet()]);orders=orders||[];tickets=tickets||[];wallet=wallet||{balance:0}}catch(e){console.error(e)}renderOrders();renderTickets();renderWallet();renderServices()}
-document.querySelectorAll('.lang').forEach(b=>b.addEventListener('click',()=>setLanguage(b.dataset.lang)));
+function renderOrders(){const box=$('ordersList');$('summaryOrders').textContent=orders.length;$('dashOrders').textContent=orders.length;if(!orders.length){box.className='empty-state';box.textContent=msg('មិនទាន់មាន Order ទេ។','No orders yet.');return}box.className='';box.innerHTML=orders.map(o=>{const s=services.find(x=>x.id===o.service_id)||{};return `<div class="order-item"><div><strong>#${esc(o.id)} · ${esc((s.name||{})[lang]||o.service_id)}</strong><br>${esc(o.link||'')}</div><div>${Number(o.quantity||1)}</div><div class="status-chip">${esc(o.status||'pending')}</div></div>`}).join('')}
+function renderTickets(){const box=$('ticketList');$('ticketBadge').textContent=tickets.length;$('summaryTickets').textContent=tickets.length;$('dashTickets').textContent=tickets.length;if(!tickets.length){box.innerHTML=`<div class="empty-state">${msg('មិនទាន់មាន Ticket ទេ។','No tickets yet.')}</div>`;return}box.innerHTML=tickets.map(t=>`<article class="ticket-card"><div><strong>${esc(t.subject)}</strong><span>${esc(t.status)}</span></div><p>${esc(t.message)}</p></article>`).join('')}
+async function loadData(){
+  identity=await backend.getIdentity();if(!identity){location.replace('login.html');return}
+  setupIdentity();
+  try{
+    const [o,t,w,s,a]=await Promise.all([backend.listOrders(),backend.listTickets(),backend.getWallet(),backend.listServices(),backend.getAdminAccess()]);
+    orders=o||[];tickets=t||[];wallet=w||{balance:0};if(s?.length)services=s.map(mapDbService);adminAccess=a||null;
+  }catch(e){console.error(e)}
+  renderOrders();renderTickets();renderWallet();renderServices();setupAdminShortcut();
+}
+document.querySelectorAll('.lang').forEach(b=>b.addEventListener('click',()=>{setLanguage(b.dataset.lang);setupAdminShortcut()}));
 document.querySelectorAll('.nav-item[data-view]').forEach(b=>b.addEventListener('click',()=>openView(b.dataset.view)));
 document.querySelectorAll('.platform').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.platform').forEach(x=>x.classList.remove('active'));b.classList.add('active');selectedPlatform=b.dataset.platform;renderServices()}));
 $('menuToggle')?.addEventListener('click',()=>$('sidebar').classList.toggle('closed'));
@@ -39,4 +62,4 @@ $('serviceSearch')?.addEventListener('input',renderServices);$('categorySelect')
 $('submitOrder')?.addEventListener('click',async()=>{const s=currentService();if(!s)return;const link=$('projectLink').value.trim(),quantity=Number($('quantity').value)||1;if(!link){$('formNote').textContent=msg('សូមបញ្ចូល Link សាធារណៈ។','Enter a public link.');return}try{$('submitOrder').disabled=true;await backend.createOrderRequest({serviceId:s.id,link,quantity});orders=await backend.listOrders();renderOrders();$('formNote').textContent=msg('បានបង្កើត Order request ក្នុង Supabase។','Order request saved to Supabase.')}catch(e){$('formNote').textContent=e.message||msg('មានបញ្ហា។','Something went wrong.')}finally{$('submitOrder').disabled=false}});
 $('ticketForm')?.addEventListener('submit',async e=>{e.preventDefault();const subject=$('ticketSubject').value.trim(),message=$('ticketMessage').value.trim();try{await backend.createTicket({subject,message});tickets=await backend.listTickets();renderTickets();e.target.reset();$('ticketNote').textContent=msg('Ticket ត្រូវបានរក្សាទុក។','Ticket saved.')}catch(err){$('ticketNote').textContent=err.message||msg('មិនអាចបង្កើត Ticket បាន។','Unable to create ticket.')}});
 $('profileForm')?.addEventListener('submit',async e=>{e.preventDefault();const name=$('profileName').value.trim();if(name.length<2)return;try{const p=await backend.updateProfile(name);identity.displayName=p?.display_name||name;setupIdentity();$('profileNote').textContent=msg('បានរក្សាទុក។','Saved.')}catch(err){$('profileNote').textContent=err.message||msg('មិនអាចរក្សាទុកបាន។','Unable to save.')}});
-setLanguage(lang);loadData();
+stampVersion();setLanguage(lang);loadData();
