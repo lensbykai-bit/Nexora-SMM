@@ -73,6 +73,19 @@
       };
     },
 
+    async getAdminAccess() {
+      if (!client) return null;
+      const user = await authUser();
+      if (!user) return null;
+      const { data, error } = await client
+        .from('admin_users')
+        .select('role')
+        .eq('user_id', user.id)
+        .maybeSingle();
+      if (error) return null;
+      return data || null;
+    },
+
     async updateProfile(displayName) {
       if (!client) return null;
       const user = await authUser();
@@ -107,6 +120,19 @@
         .select('id, amount, kind, note, created_at')
         .order('created_at', { ascending: false })
         .limit(20);
+      if (error) throw error;
+      return data || [];
+    },
+
+    async listServices({ includeInactive = false } = {}) {
+      if (!client) return [];
+      let query = client
+        .from('services')
+        .select('id,category,platform,price,min_quantity,max_quantity,name_km,name_en,time_km,time_en,start_km,start_en,speed_km,speed_en,details_km,details_en,is_active,sort_order,created_at,updated_at')
+        .order('sort_order', { ascending: true })
+        .order('name_en', { ascending: true });
+      if (!includeInactive) query = query.eq('is_active', true);
+      const { data, error } = await query;
       if (error) throw error;
       return data || [];
     },
