@@ -1,5 +1,19 @@
 # Changelog
 
+## v1.4.0 — User Filters + Service Management — 2026-08-20
+- Added database-backed `services` catalog.
+- Seeded the existing legitimate marketing services into Supabase.
+- User dashboard now loads active services from Supabase with a safe fallback catalog.
+- Added Admin Console service management page.
+- Owner/Admin can create, edit, activate and pause services.
+- Service deletion is disabled to preserve historical order references.
+- Added user search and activity filters for orders, tickets and positive wallet balance.
+- Added service search and active/paused filters.
+- Added Admin Console shortcut for authorized accounts in the user dashboard.
+- Improved output escaping for saved links, ticket text and admin tables.
+- Updated dashboard/auth/admin release labels to v1.4.0.
+- Applied the v1.4.0 service migrations to the connected Supabase project.
+
 ## v1.3.0 — Admin Console Foundation — 2026-08-20
 - Added `admin.html`, `admin.css` and `admin.js` with the Pink Luxe admin design.
 - Added secure `admin_users` role table and `is_admin()` access check.
