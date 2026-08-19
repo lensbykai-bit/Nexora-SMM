@@ -1,64 +1,14 @@
 <!doctype html>
 <html lang="km">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Nexora SMM — Register</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Nexora SMM — Register v1.1.0</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Khmer:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="icon" href="logo.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="auth.css">
+  <link rel="icon" href="logo.svg" type="image/svg+xml"><link rel="stylesheet" href="auth.css">
 </head>
 <body>
-  <main class="auth-shell">
-    <section class="auth-brand">
-      <div class="brand-lockup">
-        <img src="logo.svg" alt="Nexora SMM logo">
-        <div><strong>NEXORA SMM</strong><span>Pink Premium · Khmer + English</span></div>
-      </div>
-      <div class="brand-copy">
-        <span class="eyebrow">CREATE YOUR ACCOUNT</span>
-        <h1 data-km="ចាប់ផ្តើមគណនី Nexora SMM របស់អ្នក" data-en="Start your Nexora SMM account">ចាប់ផ្តើមគណនី Nexora SMM របស់អ្នក</h1>
-        <p data-km="បង្កើតគណនីសាកល្បង ហើយបន្តទៅ Dashboard ដើម្បីស្គាល់លំហូរប្រើប្រាស់របស់ប្រព័ន្ធ។" data-en="Create a demo account and continue to the dashboard to explore the account flow.">បង្កើតគណនីសាកល្បង ហើយបន្តទៅ Dashboard ដើម្បីស្គាល់លំហូរប្រើប្រាស់របស់ប្រព័ន្ធ។</p>
-      </div>
-      <div class="brand-points">
-        <div><strong data-km="គណនីផ្ទាល់ខ្លួន" data-en="Personal account">គណនីផ្ទាល់ខ្លួន</strong><span>Dashboard</span></div>
-        <div><strong data-km="ការបញ្ជាទិញ" data-en="Orders">ការបញ្ជាទិញ</strong><span>History</span></div>
-        <div><strong data-km="ជំនួយ" data-en="Support">ជំនួយ</strong><span>Tickets</span></div>
-      </div>
-    </section>
-
-    <section class="auth-main">
-      <div class="auth-card">
-        <div class="auth-top">
-          <div>
-            <span class="eyebrow">JOIN NEXORA</span>
-            <h2 data-km="បង្កើតគណនី" data-en="Create account">បង្កើតគណនី</h2>
-            <p data-km="បំពេញព័ត៌មានខាងក្រោម ដើម្បីបង្កើត Demo Account។" data-en="Fill in the details below to create a demo account.">បំពេញព័ត៌មានខាងក្រោម ដើម្បីបង្កើត Demo Account។</p>
-          </div>
-          <div class="lang-switch">
-            <button class="lang-btn active" data-lang="km">ខ្មែរ</button>
-            <button class="lang-btn" data-lang="en">EN</button>
-          </div>
-        </div>
-
-        <form class="auth-form" id="registerForm">
-          <label><span data-km="ឈ្មោះ / Name" data-en="Name">ឈ្មោះ / Name</span><input id="registerName" type="text" autocomplete="name" placeholder="Nexora User" required></label>
-          <label><span data-km="អ៊ីមែល / Email" data-en="Email">អ៊ីមែល / Email</span><input id="registerEmail" type="email" autocomplete="email" placeholder="name@example.com" required></label>
-          <label><span data-km="ពាក្យសម្ងាត់ / Password" data-en="Password">ពាក្យសម្ងាត់ / Password</span><div class="password-wrap"><input id="registerPassword" type="password" autocomplete="new-password" placeholder="យ៉ាងតិច 6 តួអក្សរ / 6+ characters" required><button class="toggle-pass" type="button" data-target="registerPassword" aria-label="Show password">◉</button></div></label>
-          <label><span data-km="បញ្ជាក់ Password" data-en="Confirm password">បញ្ជាក់ Password</span><div class="password-wrap"><input id="confirmPassword" type="password" autocomplete="new-password" placeholder="••••••••" required><button class="toggle-pass" type="button" data-target="confirmPassword" aria-label="Show password">◉</button></div></label>
-          <label class="remember"><input type="checkbox" required><span data-km="ខ្ញុំយល់ព្រមនឹងលក្ខខណ្ឌ Demo របស់ Nexora SMM។" data-en="I agree to the Nexora SMM demo terms.">ខ្ញុំយល់ព្រមនឹងលក្ខខណ្ឌ Demo របស់ Nexora SMM។</span></label>
-          <button class="primary-btn" type="submit" data-km="បង្កើតគណនី / Register" data-en="Create account">បង្កើតគណនី / Register</button>
-          <p class="auth-status" id="authStatus"></p>
-        </form>
-
-        <p class="secondary-link"><span data-km="មានគណនីរួចហើយ?" data-en="Already have an account?">មានគណនីរួចហើយ?</span> <a href="login.html" data-km="ចូលគណនី" data-en="Sign in">ចូលគណនី</a></p>
-        <div class="demo-note" data-km="ចំណាំ៖ នៅដំណាក់កាលនេះ Browser រក្សាទុកតែឈ្មោះ និង Email សម្រាប់បង្ហាញ Demo ប៉ុណ្ណោះ។ Password មិនត្រូវបានរក្សាទុកទេ។ Backend Authentication ពិតនឹងធ្វើនៅជំហានបន្ទាប់។" data-en="Note: At this stage the browser stores only the name and email for demo display. Passwords are not stored. Real backend authentication comes in the next stage.">ចំណាំ៖ នៅដំណាក់កាលនេះ Browser រក្សាទុកតែឈ្មោះ និង Email សម្រាប់បង្ហាញ Demo ប៉ុណ្ណោះ។ Password មិនត្រូវបានរក្សាទុកទេ។ Backend Authentication ពិតនឹងធ្វើនៅជំហានបន្ទាប់។</div>
-        <a class="back-link" href="index.html" data-km="← ត្រឡប់ទៅ Dashboard" data-en="← Back to dashboard">← ត្រឡប់ទៅ Dashboard</a>
-      </div>
-    </section>
-  </main>
-  <script src="auth.js"></script>
-</body>
-</html>
+<main class="auth-shell"><section class="auth-brand"><div class="brand-lockup"><img src="logo.svg" alt="Nexora SMM"><div><strong>NEXORA SMM</strong><span>Pink Luxe · v1.1.0</span></div></div><div class="brand-copy"><span class="eyebrow">CREATE ACCOUNT</span><h1 data-km="បង្កើត Demo Account របស់អ្នក" data-en="Create your demo account">បង្កើត Demo Account របស់អ្នក</h1><p data-km="បន្ទាប់ពី Register អ្នកអាចសាកល្បង Dashboard v1.1.0 និងមុខងារ UI ថ្មីៗ។" data-en="After registering you can explore dashboard v1.1.0 and its new UI features.">បន្ទាប់ពី Register អ្នកអាចសាកល្បង Dashboard v1.1.0 និងមុខងារ UI ថ្មីៗ។</p></div><div class="brand-points"><div><strong>Favorites</strong><span>Saved locally</span></div><div><strong>Notifications</strong><span>Demo center</span></div><div><strong>Activity</strong><span>Recent actions</span></div></div></section>
+<section class="auth-main"><div class="auth-card"><div class="auth-top"><div><span class="eyebrow">REGISTER</span><h2 data-km="បង្កើតគណនី" data-en="Create account">បង្កើតគណនី</h2><p data-km="ព័ត៌មាននេះរក្សាទុកតែនៅ Browser របស់អ្នកសម្រាប់ Demo។" data-en="This information is stored only in your browser for the demo.">ព័ត៌មាននេះរក្សាទុកតែនៅ Browser របស់អ្នកសម្រាប់ Demo។</p></div><div class="lang-switch"><button class="lang-btn active" data-lang="km">ខ្មែរ</button><button class="lang-btn" data-lang="en">EN</button></div></div>
+<form class="auth-form" id="registerForm"><label><span data-km="ឈ្មោះ" data-en="Display name">ឈ្មោះ</span><input id="registerName" required maxlength="40"></label><label><span>Email</span><input id="registerEmail" type="email" required></label><label><span>Password</span><div class="password-wrap"><input id="registerPassword" type="password" minlength="6" required><button type="button" class="toggle-pass" data-target="registerPassword">◉</button></div></label><label><span data-km="បញ្ជាក់ Password" data-en="Confirm password">បញ្ជាក់ Password</span><div class="password-wrap"><input id="confirmPassword" type="password" minlength="6" required><button type="button" class="toggle-pass" data-target="confirmPassword">◉</button></div></label><button class="primary-btn" type="submit" data-km="បង្កើត និងចូល Dashboard" data-en="Create and open dashboard">បង្កើត និងចូល Dashboard</button><p class="auth-status" id="authStatus"></p></form>
+<div class="secondary-link"><span data-km="មានគណនីរួច?" data-en="Already have an account?">មានគណនីរួច?</span> <a href="login.html" data-km="ចូលគណនី" data-en="Sign in">ចូលគណនី</a></div><div class="demo-note" data-km="Demo only: កុំប្រើ Password ពិត ឬព័ត៌មានសម្ងាត់។" data-en="Demo only: Do not use a real password or sensitive information.">Demo only: កុំប្រើ Password ពិត ឬព័ត៌មានសម្ងាត់។</div></div></section></main><script src="auth.js"></script></body></html>
