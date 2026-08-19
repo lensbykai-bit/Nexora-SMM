@@ -1,133 +1,224 @@
 <!doctype html>
-<html lang="en">
+<html lang="km">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Nexora SMM — modern social media marketing dashboard." />
-  <title>Nexora SMM Dashboard</title>
+  <meta name="description" content="Nexora SMM — premium bilingual social media marketing dashboard." />
+  <title>Nexora SMM — Pink Premium</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Khmer:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="logo.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="app-shell">
     <aside class="sidebar" id="sidebar">
       <div class="brand-row">
-        <div class="brand-mark">N</div>
-        <div><strong>NEXORA SMM</strong><span>Social Media Marketing</span></div>
+        <img class="brand-logo" src="logo.svg" alt="Nexora SMM logo">
+        <div>
+          <strong>NEXORA SMM</strong>
+          <span data-km="បន្ទះគ្រប់គ្រងទីផ្សារបណ្តាញសង្គម" data-en="Social Media Marketing Panel">បន្ទះគ្រប់គ្រងទីផ្សារបណ្តាញសង្គម</span>
+        </div>
       </div>
+
       <div class="profile-card">
         <div class="avatar">NX</div>
-        <div><span>Balance</span><strong>$0.00</strong><small>Demo account</small></div>
+        <div>
+          <span data-km="សមតុល្យ / Balance" data-en="Balance">សមតុល្យ / Balance</span>
+          <strong>$0.00</strong>
+          <small data-km="គណនីសាកល្បង" data-en="Demo account">គណនីសាកល្បង</small>
+        </div>
       </div>
+
       <nav class="side-nav">
-        <button class="nav-item active" data-view="new-order">🛒 <span>New Order</span></button>
-        <button class="nav-item" data-view="orders">📦 <span>My Orders</span></button>
-        <button class="nav-item" data-view="funds">💳 <span>Add Funds</span></button>
-        <button class="nav-item" data-view="services">🧰 <span>Services</span></button>
-        <button class="nav-item" data-view="tickets">💬 <span>Tickets</span><b class="badge">0</b></button>
-        <button class="nav-item" data-view="support">❓ <span>Support</span></button>
+        <button class="nav-item active" data-view="new-order"><span class="nav-icon">✦</span><span data-km="បញ្ជាទិញថ្មី" data-en="New Order">បញ្ជាទិញថ្មី</span></button>
+        <button class="nav-item" data-view="orders"><span class="nav-icon">▣</span><span data-km="ការបញ្ជាទិញរបស់ខ្ញុំ" data-en="My Orders">ការបញ្ជាទិញរបស់ខ្ញុំ</span></button>
+        <button class="nav-item" data-view="funds"><span class="nav-icon">＋</span><span data-km="បញ្ចូលទឹកប្រាក់" data-en="Add Funds">បញ្ចូលទឹកប្រាក់</span></button>
+        <button class="nav-item" data-view="services"><span class="nav-icon">◆</span><span data-km="សេវាកម្ម" data-en="Services">សេវាកម្ម</span></button>
+        <button class="nav-item" data-view="tickets"><span class="nav-icon">◌</span><span data-km="សំបុត្រជំនួយ" data-en="Tickets">សំបុត្រជំនួយ</span><b class="badge">0</b></button>
+        <button class="nav-item" data-view="support"><span class="nav-icon">?</span><span data-km="ជំនួយ" data-en="Support">ជំនួយ</span></button>
       </nav>
-      <div class="sidebar-foot">Nexora SMM v1</div>
+
+      <div class="premium-note">
+        <span class="premium-kicker">NEXORA PINK</span>
+        <strong data-km="រចនាបែប Premium" data-en="Premium Experience">រចនាបែប Premium</strong>
+        <p data-km="ផ្ទាំងគ្រប់គ្រងស្អាត ទន់ភ្លន់ និងងាយប្រើ។" data-en="A polished, elegant and easy-to-use dashboard.">ផ្ទាំងគ្រប់គ្រងស្អាត ទន់ភ្លន់ និងងាយប្រើ។</p>
+      </div>
+
+      <div class="sidebar-foot">Nexora SMM · Pink Premium v2</div>
     </aside>
 
     <section class="main-area">
       <header class="topbar">
-        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
-        <div class="topbar-title"><strong>Nexora SMM</strong><span>Marketing Dashboard</span></div>
-        <div class="top-actions"><button>🔔</button><button>⚙️</button><div class="user-dot">NX</div></div>
+        <div class="topbar-left">
+          <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+          <div class="topbar-title">
+            <span class="eyebrow" data-km="សូមស្វាគមន៍មកកាន់" data-en="WELCOME TO">សូមស្វាគមន៍មកកាន់</span>
+            <strong>Nexora SMM</strong>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <div class="lang-switch" aria-label="Language switcher">
+            <button class="lang-btn active" data-lang="km">ខ្មែរ</button>
+            <button class="lang-btn" data-lang="en">EN</button>
+          </div>
+          <button class="circle-btn" aria-label="Notifications">♡</button>
+          <button class="circle-btn" aria-label="Settings">⚙</button>
+          <div class="user-dot">NX</div>
+        </div>
       </header>
 
       <main class="content">
+        <section class="hero-card">
+          <div>
+            <span class="eyebrow" data-km="បន្ទះគ្រប់គ្រង PINK PREMIUM" data-en="PINK PREMIUM DASHBOARD">បន្ទះគ្រប់គ្រង PINK PREMIUM</span>
+            <h1 data-km="គ្រប់គ្រងសេវាកម្មរបស់អ្នក ក្នុងកន្លែងតែមួយ" data-en="Manage your services in one beautiful place">គ្រប់គ្រងសេវាកម្មរបស់អ្នក ក្នុងកន្លែងតែមួយ</h1>
+            <p data-km="រៀបចំការបញ្ជាទិញ សេវាកម្ម និងជំនួយដោយរចនាបែបទំនើប ស្អាត និងងាយប្រើ។" data-en="Organize orders, services and support with a modern, clean and easy-to-use experience.">រៀបចំការបញ្ជាទិញ សេវាកម្ម និងជំនួយដោយរចនាបែបទំនើប ស្អាត និងងាយប្រើ។</p>
+          </div>
+          <div class="hero-badge">
+            <span data-km="ស្ថានភាពប្រព័ន្ធ" data-en="System Status">ស្ថានភាពប្រព័ន្ធ</span>
+            <strong><i></i> <span data-km="កំពុងដំណើរការ" data-en="Online">កំពុងដំណើរការ</span></strong>
+          </div>
+        </section>
+
         <section class="stats-strip">
-          <div><span>Panel Orders</span><strong>0</strong></div>
-          <div><span>My Orders</span><strong id="orderCount">0</strong></div>
-          <div><span>Total Spend</span><strong id="totalSpend">$0.00</strong></div>
-          <div><span>Balance</span><strong>$0.00</strong></div>
+          <div><span data-km="ការបញ្ជាទិញសរុប" data-en="Panel Orders">ការបញ្ជាទិញសរុប</span><strong>0</strong></div>
+          <div><span data-km="ការបញ្ជាទិញរបស់ខ្ញុំ" data-en="My Orders">ការបញ្ជាទិញរបស់ខ្ញុំ</span><strong id="orderCount">0</strong></div>
+          <div><span data-km="ចំណាយសរុប" data-en="Total Spend">ចំណាយសរុប</span><strong id="totalSpend">$0.00</strong></div>
+          <div><span data-km="សមតុល្យ" data-en="Balance">សមតុល្យ</span><strong>$0.00</strong></div>
         </section>
 
         <section class="platform-tabs">
-          <button class="platform active" data-platform="all">✨ Everything</button>
-          <button class="platform" data-platform="tiktok">🎵 TikTok</button>
-          <button class="platform" data-platform="facebook">📘 Facebook</button>
-          <button class="platform" data-platform="youtube">▶️ YouTube</button>
-          <button class="platform" data-platform="telegram">✈️ Telegram</button>
-          <button class="platform" data-platform="instagram">📸 Instagram</button>
-          <button class="platform" data-platform="website">🌐 Website</button>
+          <button class="platform active" data-platform="all"><span>✦</span><b data-km="ទាំងអស់" data-en="Everything">ទាំងអស់</b></button>
+          <button class="platform" data-platform="tiktok"><span>♪</span><b>TikTok</b></button>
+          <button class="platform" data-platform="facebook"><span>f</span><b>Facebook</b></button>
+          <button class="platform" data-platform="youtube"><span>▶</span><b>YouTube</b></button>
+          <button class="platform" data-platform="telegram"><span>➤</span><b>Telegram</b></button>
+          <button class="platform" data-platform="instagram"><span>◎</span><b>Instagram</b></button>
+          <button class="platform" data-platform="website"><span>⌂</span><b>Website</b></button>
         </section>
 
         <section class="view active" id="new-order">
           <div class="dashboard-grid">
             <div class="panel order-panel">
-              <div class="panel-tabs"><button class="active">🛒 New Order</button><button>★ Favorites</button></div>
-              <label>Search</label>
-              <input id="serviceSearch" type="search" placeholder="Search marketing services" />
+              <div class="panel-heading">
+                <div>
+                  <span class="eyebrow" data-km="ចាប់ផ្តើម" data-en="GET STARTED">ចាប់ផ្តើម</span>
+                  <h2 data-km="បញ្ជាទិញថ្មី" data-en="New Order">បញ្ជាទិញថ្មី</h2>
+                </div>
+                <span class="soft-badge" data-km="សាកល្បង" data-en="Demo">សាកល្បង</span>
+              </div>
 
-              <label>Category</label>
+              <div class="panel-tabs">
+                <button class="active"><span>✦</span><b data-km="បញ្ជាទិញថ្មី" data-en="New Order">បញ្ជាទិញថ្មី</b></button>
+                <button><span>♡</span><b data-km="ចំណូលចិត្ត" data-en="Favorites">ចំណូលចិត្ត</b></button>
+              </div>
+
+              <label data-km="ស្វែងរក" data-en="Search">ស្វែងរក</label>
+              <input id="serviceSearch" type="search" placeholder="ស្វែងរកសេវាកម្ម / Search services" />
+
+              <label data-km="ប្រភេទ" data-en="Category">ប្រភេទ</label>
               <select id="categorySelect">
-                <option value="all">All Marketing Services</option>
-                <option value="content">Content & Publishing</option>
-                <option value="ads">Advertising Support</option>
-                <option value="community">Community Management</option>
-                <option value="analytics">Analytics & Reporting</option>
+                <option value="all" data-km="សេវាកម្មទាំងអស់" data-en="All Marketing Services">សេវាកម្មទាំងអស់</option>
+                <option value="content" data-km="មាតិកា និងការផ្សព្វផ្សាយ" data-en="Content & Publishing">មាតិកា និងការផ្សព្វផ្សាយ</option>
+                <option value="ads" data-km="ជំនួយការផ្សាយពាណិជ្ជកម្ម" data-en="Advertising Support">ជំនួយការផ្សាយពាណិជ្ជកម្ម</option>
+                <option value="community" data-km="គ្រប់គ្រងសហគមន៍" data-en="Community Management">គ្រប់គ្រងសហគមន៍</option>
+                <option value="analytics" data-km="វិភាគ និងរបាយការណ៍" data-en="Analytics & Reporting">វិភាគ និងរបាយការណ៍</option>
               </select>
 
-              <label>Service</label>
+              <label data-km="សេវាកម្ម" data-en="Service">សេវាកម្ម</label>
               <select id="serviceSelect"></select>
 
-              <label>Project / Page Link</label>
+              <label data-km="តំណគម្រោង / ទំព័រ" data-en="Project / Page Link">តំណគម្រោង / ទំព័រ</label>
               <input id="projectLink" type="url" placeholder="https://example.com/page" />
 
-              <label>Package Quantity</label>
+              <label data-km="ចំនួនកញ្ចប់" data-en="Package Quantity">ចំនួនកញ្ចប់</label>
               <input id="quantity" type="number" min="1" max="100" value="1" />
-              <small class="helper">Choose how many service units or deliverables you need.</small>
+              <small class="helper" data-km="ជ្រើសរើសចំនួនឯកតាសេវាកម្មដែលអ្នកត្រូវការ។" data-en="Choose how many service units or deliverables you need.">ជ្រើសរើសចំនួនឯកតាសេវាកម្មដែលអ្នកត្រូវការ។</small>
 
-              <label>Estimated turnaround</label>
-              <input id="avgTime" type="text" readonly />
+              <div class="two-fields">
+                <div>
+                  <label data-km="ពេលវេលាប៉ាន់ស្មាន" data-en="Estimated Turnaround">ពេលវេលាប៉ាន់ស្មាន</label>
+                  <input id="avgTime" type="text" readonly />
+                </div>
+                <div>
+                  <label data-km="តម្លៃប៉ាន់ស្មាន" data-en="Estimated Charge">តម្លៃប៉ាន់ស្មាន</label>
+                  <input id="charge" type="text" readonly />
+                </div>
+              </div>
 
-              <label>Estimated Charge</label>
-              <input id="charge" type="text" readonly />
-
-              <button class="submit-btn" id="submitOrder">Submit Request</button>
+              <button class="submit-btn" id="submitOrder"><span data-km="ដាក់សំណើ" data-en="Submit Request">ដាក់សំណើ</span> <b>→</b></button>
               <p class="form-note" id="formNote"></p>
             </div>
 
             <div class="panel details-panel">
-              <div class="panel-title">ⓘ Service Details</div>
-              <div class="details-search"><input type="search" placeholder="Search your requests" disabled><button>⌕</button></div>
-              <h4>Example Link</h4>
-              <div class="detail-row"><span class="detail-icon">🔗</span><span id="exampleLink">Public page or project URL</span></div>
-              <div class="detail-columns">
-                <div><h4>Start Time</h4><div class="pill">⚡ <span id="startTime">Within 1 business day</span></div></div>
-                <div><h4>Delivery</h4><div class="pill">🚀 <span id="speed">Based on package</span></div></div>
-                <div><h4>Scope</h4><div class="pill">♻️ <span id="guarantee">Defined deliverables</span></div></div>
-                <div><h4>Average Time</h4><div class="pill">⏱ <span id="detailAvg">1–2 days</span></div></div>
+              <div class="panel-heading">
+                <div>
+                  <span class="eyebrow" data-km="ព័ត៌មានលម្អិត" data-en="DETAILS">ព័ត៌មានលម្អិត</span>
+                  <h2 data-km="ព័ត៌មានសេវាកម្ម" data-en="Service Details">ព័ត៌មានសេវាកម្ម</h2>
+                </div>
+                <span class="soft-badge">Nexora</span>
               </div>
-              <h4>More Details</h4>
+
+              <div class="details-search">
+                <input type="search" placeholder="Search requests" disabled>
+                <button>⌕</button>
+              </div>
+
+              <h4 data-km="តំណគំរូ" data-en="Example Link">តំណគំរូ</h4>
+              <div class="detail-row"><span class="detail-icon">↗</span><span id="exampleLink" data-km="តំណទំព័រ ឬគម្រោងសាធារណៈ" data-en="Public page or project URL">តំណទំព័រ ឬគម្រោងសាធារណៈ</span></div>
+
+              <div class="detail-columns">
+                <div><h4 data-km="ចាប់ផ្តើម" data-en="Start Time">ចាប់ផ្តើម</h4><div class="pill"><span>⚡</span><b id="startTime"></b></div></div>
+                <div><h4 data-km="ការដឹកជញ្ជូន" data-en="Delivery">ការដឹកជញ្ជូន</h4><div class="pill"><span>↗</span><b id="speed"></b></div></div>
+                <div><h4 data-km="វិសាលភាព" data-en="Scope">វិសាលភាព</h4><div class="pill"><span>◇</span><b id="guarantee"></b></div></div>
+                <div><h4 data-km="ពេលវេលាមធ្យម" data-en="Average Time">ពេលវេលាមធ្យម</h4><div class="pill"><span>◷</span><b id="detailAvg"></b></div></div>
+              </div>
+
+              <h4 data-km="ព័ត៌មានបន្ថែម" data-en="More Details">ព័ត៌មានបន្ថែម</h4>
               <div class="more-details" id="serviceDetails"></div>
             </div>
           </div>
         </section>
 
         <section class="view" id="orders">
-          <div class="panel page-panel"><div class="panel-title">📦 My Orders</div><div id="ordersList" class="empty-state">No demo orders yet.</div></div>
+          <div class="panel page-panel">
+            <div class="panel-heading"><div><span class="eyebrow">NEXORA</span><h2 data-km="ការបញ្ជាទិញរបស់ខ្ញុំ" data-en="My Orders">ការបញ្ជាទិញរបស់ខ្ញុំ</h2></div></div>
+            <div id="ordersList" class="empty-state" data-km="មិនទាន់មានការបញ្ជាទិញសាកល្បងទេ។" data-en="No demo orders yet.">មិនទាន់មានការបញ្ជាទិញសាកល្បងទេ។</div>
+          </div>
         </section>
 
         <section class="view" id="funds">
-          <div class="panel page-panel"><div class="panel-title">💳 Add Funds</div><h2>Payment setup</h2><p>This demo does not process real payments yet. A secure backend is required before connecting any payment provider.</p></div>
+          <div class="panel page-panel">
+            <div class="panel-heading"><div><span class="eyebrow">NEXORA PAY</span><h2 data-km="បញ្ចូលទឹកប្រាក់" data-en="Add Funds">បញ្ចូលទឹកប្រាក់</h2></div><span class="soft-badge" data-km="មិនទាន់ភ្ជាប់" data-en="Not connected">មិនទាន់ភ្ជាប់</span></div>
+            <div class="fund-grid">
+              <button>$5</button><button>$10</button><button>$20</button><button>$50</button>
+            </div>
+            <p data-km="កំណែសាកល្បងនេះមិនទាន់ដំណើរការទូទាត់ពិតទេ។ ត្រូវការប្រព័ន្ធ backend សុវត្ថិភាព មុនភ្ជាប់ payment provider។" data-en="This demo does not process real payments yet. A secure backend is required before connecting a payment provider.">កំណែសាកល្បងនេះមិនទាន់ដំណើរការទូទាត់ពិតទេ។ ត្រូវការប្រព័ន្ធ backend សុវត្ថិភាព មុនភ្ជាប់ payment provider។</p>
+          </div>
         </section>
 
         <section class="view" id="services">
-          <div class="panel page-panel"><div class="panel-title">🧰 Services</div><div id="serviceCards" class="service-cards"></div></div>
+          <div class="panel page-panel">
+            <div class="panel-heading"><div><span class="eyebrow">NEXORA</span><h2 data-km="សេវាកម្ម" data-en="Services">សេវាកម្ម</h2></div></div>
+            <div id="serviceCards" class="service-cards"></div>
+          </div>
         </section>
 
         <section class="view" id="tickets">
-          <div class="panel page-panel"><div class="panel-title">💬 Tickets</div><h2>Support tickets</h2><p>Ticket storage will be connected later when the backend is ready.</p></div>
+          <div class="panel page-panel">
+            <div class="panel-heading"><div><span class="eyebrow">SUPPORT</span><h2 data-km="សំបុត្រជំនួយ" data-en="Support Tickets">សំបុត្រជំនួយ</h2></div></div>
+            <p data-km="ការរក្សាទុកសំបុត្រជំនួយនឹងភ្ជាប់នៅពេល backend រួចរាល់។" data-en="Ticket storage will be connected when the backend is ready.">ការរក្សាទុកសំបុត្រជំនួយនឹងភ្ជាប់នៅពេល backend រួចរាល់។</p>
+          </div>
         </section>
 
         <section class="view" id="support">
-          <div class="panel page-panel"><div class="panel-title">❓ Support</div><h2>Need help?</h2><p>Add your Telegram, email, or support form here when you're ready.</p></div>
+          <div class="panel page-panel">
+            <div class="panel-heading"><div><span class="eyebrow">24/7</span><h2 data-km="ត្រូវការជំនួយ?" data-en="Need Help?">ត្រូវការជំនួយ?</h2></div></div>
+            <p data-km="អាចបន្ថែម Telegram, Email ឬទម្រង់ទំនាក់ទំនងនៅទីនេះពេលអ្នករួចរាល់។" data-en="You can add Telegram, email, or a contact form here when you're ready.">អាចបន្ថែម Telegram, Email ឬទម្រង់ទំនាក់ទំនងនៅទីនេះពេលអ្នករួចរាល់។</p>
+          </div>
         </section>
       </main>
     </section>
