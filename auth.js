@@ -1,4 +1,4 @@
-const AUTH_VERSION='1.2.0';
+const AUTH_VERSION='1.2.1';
 let authLang=localStorage.getItem('nexora_lang')||'km';
 const backend=window.NexoraBackend;
 const realMode=Boolean(backend?.isConfigured);
@@ -13,6 +13,24 @@ function setAuthLanguage(next){
 function msg(km,en){return authLang==='km'?km:en}
 function statusText(text){const status=document.getElementById('authStatus');if(status)status.textContent=text}
 function lockForm(form,locked){form?.querySelectorAll('input,button').forEach(el=>{if(!el.classList.contains('lang-btn'))el.disabled=locked})}
+
+function friendlyAuthError(error,action){
+  const code=String(error?.code||'').toLowerCase();
+  const raw=String(error?.message||'').toLowerCase();
+  if(code==='invalid_credentials'||raw.includes('invalid login credentials')){
+    return msg('Email/Password មិនត្រូវ ឬគណនីនេះមិនទាន់បានបង្កើតនៅ Supabase ទេ។ បើជាលើកដំបូង សូមចុច «បង្កើតគណនី» មុន។','Email/password is incorrect, or this account has not been created in Supabase yet. If this is your first time, create an account first.');
+  }
+  if(code==='email_not_confirmed'||raw.includes('email not confirmed')){
+    return msg('Email មិនទាន់បានបញ្ជាក់។ សូមបើក Email របស់អ្នក ហើយចុច Confirm រួច Login ម្តងទៀត។','Your email is not confirmed yet. Open your email, confirm the account, then sign in again.');
+  }
+  if(code==='user_already_exists'||raw.includes('already registered')||raw.includes('already exists')){
+    return msg('Email នេះមានគណនីរួចហើយ។ សូមត្រឡប់ទៅ Login ឬប្រើការកំណត់ Password ឡើងវិញ។','An account with this email already exists. Return to sign in or reset the password.');
+  }
+  if(code==='signup_disabled'||raw.includes('signups not allowed')){
+    return msg('ការបង្កើតគណនីត្រូវបានបិទនៅ Supabase។','Account registration is disabled in Supabase.');
+  }
+  return error?.message||msg(action==='signup'?'មិនអាចបង្កើតគណនីបាន។':'មិនអាចចូលគណនីបាន។',action==='signup'?'Unable to create account.':'Unable to sign in.');
+}
 
 async function redirectIfSignedIn(){
   if(!realMode)return;
@@ -43,7 +61,7 @@ loginForm?.addEventListener('submit',async e=>{
     statusText(realMode?msg('បានចូលគណនីពិត។ កំពុងបើក Dashboard...','Signed in. Opening dashboard...'):msg('បានចូល Demo។ កំពុងបើក Dashboard...','Demo sign-in successful. Opening dashboard...'));
     setTimeout(()=>location.href='index.html',350);
   }catch(error){
-    statusText(error?.message||msg('មិនអាចចូលគណនីបាន។','Unable to sign in.'));
+    statusText(friendlyAuthError(error,'signin'));
     lockForm(loginForm,false);
   }
 });
@@ -76,7 +94,7 @@ registerForm?.addEventListener('submit',async e=>{
       lockForm(registerForm,false);
     }
   }catch(error){
-    statusText(error?.message||msg('មិនអាចបង្កើតគណនីបាន។','Unable to create account.'));
+    statusText(friendlyAuthError(error,'signup'));
     lockForm(registerForm,false);
   }
 });
