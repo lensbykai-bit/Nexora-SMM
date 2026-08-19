@@ -1,17 +1,22 @@
 # Nexora SMM
 
-Starter frontend for the Nexora SMM website.
+Responsive SMM dashboard starter built with plain HTML, CSS, and JavaScript.
 
-## Files
-- `index.html` — main page
-- `style.css` — design and responsive layout
-- `script.js` — mobile navigation and footer year
+## Included in v1
+- New Order dashboard
+- Service category filters
+- Service details panel
+- My Orders mock view
+- Add Funds mock view
+- Services list
+- Tickets view
+- Responsive sidebar/mobile layout
+- Local demo balance and order interaction
+
+## Run locally
+Open `index.html` in a browser.
 
 ## GitHub Pages
-1. Create a public repository named `nexora-smm`.
-2. Upload all files from this folder to the repository root.
-3. Open **Settings → Pages**.
-4. Under **Build and deployment**, select **Deploy from a branch**.
-5. Select branch `main` and folder `/ (root)`, then save.
+In GitHub: **Settings → Pages → Deploy from a branch → main / root**.
 
-> This starter is frontend-only. Real login, payments, order processing, and admin features require a backend/database and must not store secret API keys in public GitHub files.
+> This starter is a front-end demo. Connect real authentication, payments, and provider APIs only through a secure backend and in accordance with each platform's rules and terms.
